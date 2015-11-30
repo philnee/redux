@@ -3,7 +3,7 @@ import {List, Map} from 'immutable';
 import Results from '../../src/components/Results';
 import {expect} from 'chai';
 
-const {renderIntoDocument, scryRenderedDOMComponentsWithClass} = React.addons.TestUtils;
+const {renderIntoDocument, scryRenderedDOMComponentsWithClass, Simulate} = React.addons.TestUtils;
 
 describe('Results', () => {
 	it('Renders entries with vote counts or zero', () => {
@@ -23,4 +23,32 @@ describe('Results', () => {
 		expect(days).to.contain('28 Days Later');
 		expect(days).to.contain('0');
 	});
+	
+	it('invokes the next callback when the next button ins clicked', () => {
+		let nextInvoked = false;
+		const next = () => nextInvoked = true;
+		
+		const pair = List.of('Trainspotting', '28 Days Later');
+		const component = renderIntoDocument(
+			<Results pair={pair}
+					tally={Map()}
+					next={next}/>
+		);
+		
+		Simulate.click(React.findDOMNode(component.refs.next));
+		
+		expect(nextInvoked).to.equal(true);
+	})
+	
+	it('Renders the winner once there is one', () => {
+		const component = renderIntoDocument(
+			<Results winner="Trainspotting"
+					pair={["Trainspotting", "38 Days Later"]}
+					tally={Map()} />
+		);
+		
+		const winner = React.findDOMNode(component.refs.winner);
+		expect(winner).to.be.ok;
+		expect(winner.textContent).to.contain('Trainspotting');
+	})
 });
