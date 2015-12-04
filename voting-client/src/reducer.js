@@ -8,8 +8,9 @@ function removeVote(state){
 	const hasVoted = state.hasVoted;
 	const currentPair = state.getIn(['vote', 'pair'], List);
 	
-	if(currentPair && !currentPair.contains(hasVoted)){
+	if(currentPair && !currentPair.includes(hasVoted)){
 		return state.remove('hasVoted');
+		console.log('Removed hasVoted');
 	}
 	else{
 		return state;
