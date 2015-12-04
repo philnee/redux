@@ -65,4 +65,70 @@ describe('reducer', () => {
 			}
 		}));
 	});
+	
+	it('handles VOTE by setting hasVoted', () => {
+		const state = fromJS({
+			vote:{
+				pair: ['Trainspotting', '28 Days Later'],
+				tally: {Trainspotting: 1}
+			}
+		});
+		const action = {type:'VOTE', entry: 'Trainspotting'};
+		const nextState = reducer(state, action);
+		
+		expect(nextState).to.equal(fromJS({
+			vote:{
+				pair:['Trainspotting', '28 Days Later'],
+				tally:{Trainspotting: 1}
+			},
+			hasVoted: 'Trainspotting'
+		}));
+	});
+	
+	it('VOTE for an invalid entry does not set hasVoted', () => {
+		const state = fromJS({
+			vote:{
+				pair: ['Trainspotting', '28 Days Later'],
+				tally: {Trainspotting: 1}
+			}
+		});
+		const action = {type:'VOTE', entry: 'Armageddon'};
+		const nextState = reducer(state, action);
+		
+		expect(nextState).to.equal(fromJS({
+			vote:{
+				pair:['Trainspotting', '28 Days Later'],
+				tally:{Trainspotting: 1}
+			}
+		}));
+	});
+	
+	it('removes hasVoted if pair changes', () => {
+		const state = fromJS({
+			vote:{
+				pair: ['Trainspotting', '28 Days Later'],
+				tally: {Trainspotting: 1}
+			},
+			hasVoted:'Trainspotting'
+		});
+		
+		const action = {
+			type: 'SET_STATE',
+			state: {
+			vote: {
+				pair: ['Sunshine', 'Slumdog Millionaire']
+			}
+			}
+		};
+		
+		const nextState = reducer(state, action);
+		
+		expect(nextState).to.equal(fromJS({
+			vote:{
+				pair:['Sunshine', 'Slumdog Millionaire']
+			}
+		}));
+	});
+	
+	
 });
