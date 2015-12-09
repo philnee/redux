@@ -8,7 +8,6 @@ import * as actionCreators from '../action_creators';
 export const Voting = React.createClass({
 	mixins: [PureRenderMixin],
 	render: function() {
-		console.log('Here');
 		return <div>
 			{this.props.winner ?
 				<Winner ref="winner" winner={this.props.winner} /> :

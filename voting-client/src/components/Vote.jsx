@@ -7,7 +7,6 @@ export default React.createClass({
 		return this.props.pair || [];
 	},
 	isDisabled: function(){
-		console.log(this.props.hasVoted);
 		return this.props.hasVoted;
 	},
 	hasVotedFor: function(entry){

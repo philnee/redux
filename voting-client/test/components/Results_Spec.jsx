@@ -17,7 +17,6 @@ describe('Results', () => {
 				
 		expect(entries.length).to.equal(2);
 		
-		// console.log(entries[0]);
 		expect(train).to.contain('Trainspotting');
 		expect(train).to.contain('5');
 		expect(days).to.contain('28 Days Later');

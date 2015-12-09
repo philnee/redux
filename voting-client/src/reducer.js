@@ -5,10 +5,8 @@ function setState(state, newState){
 }
 
 function removeVote(state){
-	const hasVoted = state.getIn(['hasVoted']);
 	const votedRound = state.getIn(['hasVoted','round']);
 	const currentRound = state.getIn(['vote', 'round']);
-	const currentPair = state.getIn(['vote', 'pair'], List);
 	
 	if((votedRound) && votedRound != currentRound){
 		return state.remove('hasVoted');
@@ -21,7 +19,7 @@ function removeVote(state){
 function vote(state, entry){
 	const currentPair = state.getIn(['vote', 'pair']);
 	const currentRound = state.getIn(['vote', 'round']);
-	const vote = {'entry':entry, 'round':currentRound}
+	
 	if(currentPair && currentPair.contains(entry)){
 		return state.setIn(['hasVoted', 'entry'], entry)
 					.setIn(['hasVoted', 'round'], currentRound);
