@@ -36,6 +36,9 @@ export default function(state = Map(), action){
 			return removeVote(setState(state, action.state));
 		case 'VOTE':
 			return vote(state, action.entry);
+		case 'RESET':
+			console.log('here');
+			return state;
 	}
 	return state;
 }
