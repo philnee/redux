@@ -56,6 +56,26 @@ describe('reducer', () => {
     }));
   });
 
+  it('handles a VOTE for an item not in the pair', () => {
+    const initialState = fromJS({
+      vote: {
+        round: 1,
+        pair: ['Trainspotting', '28 Days Later']
+      },
+      entries: []
+    });
+    const action = {type: 'VOTE', entry: 'Sunshine', clientId: 'voter1'};
+    const nextState = reducer(initialState, action);
+
+    expect(nextState).to.equal(fromJS({
+      vote: {
+        round: 1,
+        pair: ['Trainspotting', '28 Days Later']
+      },
+      entries: []
+    }));
+  });
+
   it('has an initial state', () => {
     const action = {type: 'SET_ENTRIES', entries: ['Trainspotting']};
     const nextState = reducer(undefined, action);
